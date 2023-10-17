@@ -1,0 +1,14 @@
+[Unit]
+Description=watch_dir_service
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/home/admindl/terminal/watch_dir_service.sh
+Restart=always
+User=admindl
+Group=admindl
+
+[Install]
+WantedBy=multi-user.target
+

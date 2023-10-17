@@ -1,0 +1,2 @@
+The homeworkdebpkg.deb package deploys a service that updates weather data 
+for Kyiv every two minutes and writes it to a file in the user's home directory.
