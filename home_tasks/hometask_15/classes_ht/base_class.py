@@ -15,13 +15,9 @@ class MysqlAdminShopDB:
         )
         self.cursor = self.connection.cursor()
         
-    def execute_query(self, query, fetch_result=True):
+    def execute_query(self, query):
         self.cursor.execute(query)
-        if fetch_result:
-            result = self.cursor.fetchall()
-            return result
-        else:
-            self.connection.commit()
+        self.connection.commit()
     
     def close_connection(self):
         self.cursor.close()
