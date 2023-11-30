@@ -4,20 +4,20 @@ import flag
 import requests
 from decimal import Decimal
 
-bot = telebot.TeleBot('6964459550:AAEk0UmAZ6wEhLFKHwFVbdAx14zWuqjQlgE')  # Замените на ваш токен
+bot = telebot.TeleBot('6964459550:AAEk0UmAZ6wEhLFKHwFVbdAx14zWuqjQlgE')  
 FIXER_API_KEY = 'ed17b36278a6f11780ac0895e272d8b1'
 FIXER_API_URL = f'http://data.fixer.io/api/latest?access_key={FIXER_API_KEY}'
 
 try:
     response = requests.get(FIXER_API_URL)
-    response.raise_for_status()  # Вызывает исключение в случае ошибки HTTP
+    response.raise_for_status()  
     data = response.json()
     rate_usd_to_eur = Decimal(data['rates']['USD'])
     rate_uah_to_eur = Decimal(data['rates']['UAH'])
     rate_pln_to_eur = Decimal(data['rates']['PLN'])
 except requests.RequestException as e:
     print(f'Failed to fetch data from API: {e}')
-    raise SystemExit(1)  # Завершить программу в случае ошибки
+    raise SystemExit(1)  
 
 @bot.message_handler(commands=['start'])
 def start(message):
