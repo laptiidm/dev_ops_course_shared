@@ -3,7 +3,7 @@
 
 # GET
 - By their ID; if the provided ID is not found in the database, return an error.
-![Alt text](/assets/user_not_found.png)
+![Alt text](assets/user_not_found.png)
 - By their last name; if there are multiple students with the same last name, display all of them; if the provided last name is not found in the database, return an error.
 ![Alt text](/assets/get_lastname.png)
 ![Alt text](/assets/get_lastname_few_same_users.png)
