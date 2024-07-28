@@ -155,5 +155,7 @@ class User(Resource):
 # Add resources to the API
 api.add_resource(User, '/api/users/', '/api/users/<int:id>', '/api/users/lastname/<string:lastname>')
 
-if __name__ == '__main__':
-    app.run(debug=True)
+if __name__ == "__main__":
+    with app.app_context():         # <--- without these two lines, 
+        db.create_all()             # <--- we get the OperationalError in the title
+        app.run(debug=True)

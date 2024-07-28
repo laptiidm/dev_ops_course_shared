@@ -1,0 +1,16 @@
+env/
+
+instance/
+
+.git/
+.gitignore
+
+project/test_requests.py
+project/results.txt
+project/__pycache__
+
+
+*.pyc
+*.pyo
+*.pyd
+*.swp
