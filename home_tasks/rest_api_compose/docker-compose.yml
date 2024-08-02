@@ -1,0 +1,26 @@
+services:
+  app:
+    build:
+      context: .  #The Docker image for app should be built 
+                  #dynamically using docker-compose
+    container_name: api_app_container
+    networks:
+      - app_network
+
+  nginx:
+    image: "nginx:latest"
+    container_name: nginx_container
+    networks:
+      - app_network
+    volumes:
+      - ./nginx_settings/default.conf:/etc/nginx/conf.d/default.conf
+      #The nginx configuration should be located at 
+      #/etc/nginx/conf.d/default.conf inside the container.
+    ports:
+      - "8080:80"
+    depends_on:
+      - app
+
+networks:
+  app_network:
+    driver: bridge
