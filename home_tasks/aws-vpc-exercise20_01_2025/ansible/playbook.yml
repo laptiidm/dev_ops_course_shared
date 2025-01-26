@@ -1,0 +1,61 @@
+- name: Configure EC2 instances
+  hosts: ec2_instances
+  become: true
+  tasks:
+    - name: Install required packages for Docker
+      yum:
+        name: 
+          - docker
+          - python3
+          - git
+        state: present
+
+    - name: Start and enable Docker service
+      service:
+        name: docker
+        state: started
+        enabled: true
+
+    - name: Add ec2-user to the docker group
+      user:
+        name: ec2-user
+        groups: docker
+        append: true
+
+    - name: Install Docker Compose
+      get_url:
+        url: "https://github.com/docker/compose/releases/download/v2.18.1/docker-compose-{{ ansible_system }}-{{ ansible_architecture }}"
+        dest: /usr/local/bin/docker-compose
+        mode: '0755'
+
+    - name: Ensure /usr/local/bin is in PATH
+      lineinfile:
+        path: /etc/profile
+        line: 'export PATH=$PATH:/usr/local/bin'
+        state: present
+      become: true
+
+    - name: Source profile to update PATH
+      shell: source /etc/profile
+
+    - name: Pull Nginx Docker image
+      command: docker pull nginx
+
+    - name: Create Docker Compose file
+      copy:
+        dest: /home/ec2-user/docker-compose.yml
+        content: |
+          version: '3'
+          services:
+            nginx:
+              image: nginx
+              ports:
+                - "80:80"
+        owner: ec2-user
+        group: ec2-user
+        mode: '0644'
+
+    - name: Start Nginx with Docker Compose
+      command: /usr/local/bin/docker-compose up -d
+      args:
+        chdir: /home/ec2-user
